@@ -1,24 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
+import useStore from "./state/mainState";
+import {AllCurrenciesTable} from "./components/allCurrenciesTable";
+;
+
+
+
 
 function App() {
+    const getCurrencies =useStore((state) => state.getAllCurrencies)
+
+  useEffect(() => {
+    getCurrencies()
+
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1 className="text-3xl text-mint font-bold underline">Currencies</h1>
+      <AllCurrenciesTable/>
     </div>
   );
 }
