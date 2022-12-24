@@ -42,7 +42,7 @@ export const AllCurrenciesTable = (): any => {
                         <th className="text-white m-6">Валюта</th>
                         <th className="text-white m-6">Официальный курс</th>
                     </tr>
-
+о
                     </thead>
                     <tbody>
                     {renderCurrencyPortion()}
