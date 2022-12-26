@@ -20,6 +20,8 @@ import {ConverterStoreType} from "../types/types";
              case 'right':
                return   {...state, secondCurrency: curr}
             break
+             default:
+                 return {...state}
          }
      })
      }

@@ -20,8 +20,7 @@ export type ConverterStoreType = {
     secondCurrency: string | null,
     firstRate: number | null,
     secondRate: number | null,
-    show():  void,
+    show(): void,
     setInputSide(position: string): void,
-    setCurrency(pos: string , curr: string): void
-
+    setCurrency(pos: string, curr: string): void
 }
