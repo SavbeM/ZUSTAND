@@ -1,23 +1,28 @@
-import useStore from "../state/mainState";
+
 import React, {useState} from "react";
 import {Currencies} from "../types/types";
 import {Spinner} from "./Spinner";
 
 
-export const AllCurrenciesTable = (): any => {
-    const currencies = useStore((state) => state.currencies)
+export type AllCurrenciesPropsType = {
+    currencies: Currencies
+}
+
+export const AllCurrenciesTable = (props: AllCurrenciesPropsType): any => {
+
     const [portion, setPortion] = useState(10)
     const portionHandler = () => {
         setPortion(portion + 10)
     }
-    if (currencies && currencies.length > 0) {
+    if (props.currencies && props.currencies.length > 0) {
 
         const renderCurrencyPortion = (): any => {
             let acc = 0
             const toRenderArray: Currencies = []
             while (acc < portion) {
                 acc++
-                toRenderArray.push(currencies[acc])
+                // @ts-ignore
+                toRenderArray.push(props.currencies[acc])
 
             }
             if (toRenderArray.length > 1) {
@@ -42,7 +47,6 @@ export const AllCurrenciesTable = (): any => {
                         <th className="text-white m-6">Валюта</th>
                         <th className="text-white m-6">Официальный курс</th>
                     </tr>
-о
                     </thead>
                     <tbody>
                     {renderCurrencyPortion()}
