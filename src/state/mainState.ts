@@ -5,7 +5,7 @@ import {getAllCurrenciesRequest} from "../API/requests";
 
 
 const useStore = create<MainStoreType>()((set) => ({
-    currencies: [],
+    currencies: null,
     getAllCurrencies: async () => {
         const response = await getAllCurrenciesRequest()
         set(() => ({currencies: response}))
