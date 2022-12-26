@@ -2,7 +2,8 @@
 module.exports = {
   content: [
       "./src/**/*.{html,js,tsx, ts}",
-
+    "./node_modules/flowbite/**/*.js",
+    './node_modules/tw-elements/dist/js/**/*.js'
   ],
   theme: {
     colors: {
@@ -19,6 +20,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-      require('flowbite/plugin')
+      require('flowbite/plugin'),
+      require('tw-elements/dist/plugin')
   ],
 }
