@@ -6,7 +6,7 @@ export type CurrenciesKeys = {
     exchangedate: string
 }
 
-export type Currencies = CurrenciesKeys[] | null
+export type Currencies = CurrenciesKeys[]
 
 export type MainStoreType = {
     currencies: Currencies | null,
@@ -14,13 +14,43 @@ export type MainStoreType = {
 }
 
 export type ConverterStoreType = {
-    toShow: boolean,
+    isShown: boolean,
     inputSide: string | null,
-    firstCurrency: string | null,
-    secondCurrency: string | null,
-    firstRate: number | null,
-    secondRate: number | null,
-    show(): void,
+    firstCurrency: {
+        name: string | null,
+        value: string | number | readonly string[] | undefined,
+        rate: number | null,
+        isActive: boolean
+    },
+    secondCurrency: {
+        name: string | null,
+        value:  string | number | readonly string[] | undefined,
+        rate: number | null
+        isActive: boolean,
+    },
+    setIsShown(): void,
     setInputSide(position: string): void,
-    setCurrency(pos: string, curr: string): void
+    setCurrencyName(pos: string, curr: string, rate: number): void,
+    setValue(value: string , pos: string): void,
+    convertValue(): void,
+    setIsActive(pos: string): void
 }
+
+export type ConverterProps = {
+    currencies: Currencies
+}
+
+export type CurrenciesListProps = {
+    currencies: Currencies
+    position: string
+}
+export type ConverterDropdownProps = {
+    position: string,
+}
+export type AllCurrenciesPropsType = {
+    currencies: Currencies
+}
+export type ConverterInputType = {
+    position: string,
+}
+
