@@ -8,6 +8,8 @@ module.exports = {
   theme: {
     colors: {
       "grey": "#3D3D3D",
+      "dark": "#0f172a",
+      "lite-dark": "#334155",
       "grey-light": "#565656",
       "dark-mint": "#84AB80",
       "mint": "#B2FFA9",
