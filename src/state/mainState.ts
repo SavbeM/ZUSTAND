@@ -1,6 +1,6 @@
 import create from 'zustand'
-import {Currencies, MainStoreType} from "../types/types";
-import {getAllCurrenciesRequest} from "../API/requests";
+import {MainStoreType} from "../types/types";
+import {getAllCurrenciesRequest} from "../api/requests";
 
 
 
