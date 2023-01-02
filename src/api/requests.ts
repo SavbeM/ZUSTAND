@@ -7,3 +7,4 @@ const instance = axios.create({
 });
 
 export const getAllCurrenciesRequest = () => instance.get("/exchange?json").then(response => response.data)
+export const getCountries = () => axios.get(`https://restcountries.com/v2/all`).then(response => response.data)
