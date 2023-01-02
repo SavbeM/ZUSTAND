@@ -4679,6 +4679,14 @@ textarea.form-control.is-invalid {
   width: 1rem;
 }
 
+.w-2\.5 {
+  width: 0.625rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
