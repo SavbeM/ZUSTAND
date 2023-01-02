@@ -3,7 +3,6 @@ import {ConverterStoreType} from "../types/types";
 
 
 export const useConverterStore = create<ConverterStoreType>()((set) => ({
-
         isShown: false,
         inputSide: null,
         firstCurrency: {
@@ -20,7 +19,7 @@ export const useConverterStore = create<ConverterStoreType>()((set) => ({
         },
 
         setIsShown() {
-            set(state => ({...state, toShow: !state.isShown}))
+            set(state => ({...state, isShown: !state.isShown}))
         },
         setInputSide(position: string) {
             set(state => ({...state, inputSide: position}))
