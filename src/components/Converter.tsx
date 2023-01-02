@@ -11,7 +11,6 @@ import {ConverterInput} from "./ConverterInput";
 export const Converter = (props: ConverterProps) => {
     const dropdownValue = useConverterStore(state => state.isShown)
     const inputSide = useConverterStore(state => state.inputSide)
-
     const convertValue = useConverterStore(state => state.convertValue)
     const firstCurrency = useConverterStore( state => state.firstCurrency)
     const secondCurrency= useConverterStore( state => state.secondCurrency)
