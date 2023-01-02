@@ -10,7 +10,9 @@ export type Currencies = CurrenciesKeys[]
 
 export type MainStoreType = {
     currencies: Currencies | null,
-    getAllCurrencies(): void
+    countries: any | null,
+    getAllCurrencies(): void,
+    getAllCountries(): void
 }
 
 export type ConverterStoreType = {
