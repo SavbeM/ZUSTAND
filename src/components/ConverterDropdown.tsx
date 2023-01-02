@@ -6,6 +6,7 @@ import React from "react";
 export const ConverterDropdown = (props: ConverterDropdownProps) => {
     const setIsShown = useConverterStore(state => state.setIsShown)
     const setInputSide = useConverterStore(state => state.setInputSide)
+    const isShown = useConverterStore(state => state.isShown)
     const firstCurrencyName = useConverterStore(state => state.firstCurrency.name)
     const secondCurrencyName = useConverterStore(state => state.secondCurrency.name)
 
@@ -31,7 +32,7 @@ export const ConverterDropdown = (props: ConverterDropdownProps) => {
         <div>
             <button type="button"
                     onBlur={(e) =>
-                    { if(e.relatedTarget?.role !== "menu"){
+                    { if(e.relatedTarget?.role !== "menu" && isShown){
                         setIsShown()
                     }
                     }}
