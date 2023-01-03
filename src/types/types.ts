@@ -11,8 +11,10 @@ export type Currencies = CurrenciesKeys[]
 export type MainStoreType = {
     currencies: Currencies | null,
     countries: any | null,
-    getAllCurrencies(): void,
-    getAllCountries(): void
+    globalError: any | null
+    getAllCurrencies(data: Currencies): void,
+    getAllCountries(data: any): void
+    setGlobalError(error: any): void
 }
 
 export type ConverterStoreType = {
