@@ -3,7 +3,6 @@ import './App.css';
 import {mainStore} from "./state/mainState";
 import {Converter} from "./components/Converter";
 import {Spinner} from "./components/Spinner";
-import {Currencies} from "./types/types";
 import {AllCurrenciesTable} from "./components/AllCurrenciesTable";
 import {getAllCountriesRequest, getAllCurrenciesRequest} from "./api/requests";
 
@@ -19,30 +18,9 @@ function App() {
     const currencies = mainStore((state) => state.currencies)
     const countries = mainStore(state => state.countries)
 
-    const getCurr = async () => {
-        try {
-            const data: Currencies = await getAllCurrenciesRequest()
-            getAllCurrencies(data)
-        }
-        catch (e) {
-            setGlobalError(e)
-            console.log(e)
-        }
-    }
-    const getCnt = async () => {
-        try {
-            const data: any = await getAllCountriesRequest()
-            getAllCountries(data)
-        }
-        catch (e) {
-            setGlobalError(e)
-            console.log(e)
-        }
-    }
-
     useEffect(() => {
-        getCurr()
-        getCnt()
+        getAllCurrenciesRequest(getAllCurrencies, setGlobalError)
+        getAllCountriesRequest(getAllCountries, setGlobalError)
     }, [])
 
 return (!globalError) ?  (
