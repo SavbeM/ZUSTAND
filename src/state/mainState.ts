@@ -1,15 +1,14 @@
 import create from 'zustand'
 import {Currencies, MainStoreType} from "../types/types";
-import {getAllCurrenciesRequest} from "../API/requests";
 
 
 
-const useStore = create<MainStoreType>()((set) => ({
-    currencies: [],
-    getAllCurrencies: async () => {
-        const response = await getAllCurrenciesRequest()
-        set(() => ({currencies: response}))
-    }
+export const mainStore = create<MainStoreType>()((set) => ({
+    currencies: null,
+    countries: null,
+    globalError: null,
+    getAllCurrencies(data) {set((state) => ({...state, currencies: data}))},
+    getAllCountries(data){set((state) => ({...state, countries: data}))},
+    setGlobalError(error){set((state )=> ({...state, globalError: error}))}
 }))
 
-export default useStore

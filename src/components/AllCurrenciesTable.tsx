@@ -1,48 +1,49 @@
-import useStore from "../state/mainState";
 import React, {useState} from "react";
-import {Currencies} from "../types/types";
-import {Spinner} from "./Spinner";
+import {AllCurrenciesPropsType, Currencies} from "../types/types";
+import {buttonS, tableContainerS, tableS, tHeadS} from "../styles/styles";
 
 
-export const AllCurrenciesTable = (): any => {
-    const currencies = useStore((state) => state.currencies)
+export const AllCurrenciesTable = (props: AllCurrenciesPropsType) => {
+    const [buttonDisabled, setButtonDisabled] = useState(false)
     const [portion, setPortion] = useState(10)
     const portionHandler = () => {
-        setPortion(portion + 10)
+        if(portion + 10 < props.currencies.length) {
+            setPortion(portion + 10)
+        }
+        else {
+            const value = props.currencies.length - portion
+            setPortion(portion + value - 1)
+            setButtonDisabled(true)
+        }
     }
-    if (currencies && currencies.length > 0) {
 
-        const renderCurrencyPortion = (): any => {
+        const renderCurrencyPortion = () => {
             let acc = 0
             const toRenderArray: Currencies = []
             while (acc < portion) {
                 acc++
-                toRenderArray.push(currencies[acc])
-
+                toRenderArray.push(props.currencies[acc])
             }
             if (toRenderArray.length > 1) {
                 return (toRenderArray.map((i) => {
-
-                    return (<tr className="border-dashed border-b-2 border-b-light-blue" key={i.cc}>
+                    return (<tr className="border-dashed border-b-2 border-b-light-blue" key={Math.random()}>
                             <td className="text-white">{i.txt}</td>
                             <td className="text-white">{i.rate}</td>
                         </tr>
                     )
-
                 }))
             }
-
         }
-        return (
-            <div className="flex flex-col justify-center w-full">
+
+    return (
+            <div className={tableContainerS}>
                 <table
-                    className="table-auto rounded-md bg-rich-blue ring-dark-blue ring-4 drop-shadow-xl shadow-inner">
-                    <thead>
+                    className={tableS}>
+                    <thead className={tHeadS}>
                     <tr>
                         <th className="text-white m-6">Валюта</th>
                         <th className="text-white m-6">Официальный курс</th>
                     </tr>
-
                     </thead>
                     <tbody>
                     {renderCurrencyPortion()}
@@ -50,13 +51,10 @@ export const AllCurrenciesTable = (): any => {
                 </table>
                 <button type="button"
                         onClick={portionHandler}
-                        className="flex self-center align-middle ring-4 ring-dark-blue text-white bg-grey hover:bg-mint focus:ring-4 focus:ring-light-blue font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 hover:text-black">More...
+                        disabled={buttonDisabled}
+                        className={buttonS}>More...
                 </button>
             </div>
         )
-    } else {
-        return (
-                <Spinner/>
-        )
     }
-}
+
