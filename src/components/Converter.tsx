@@ -14,6 +14,7 @@ export const Converter = (props: ConverterProps) => {
     const convertValue = useConverterStore(state => state.convertValue)
     const firstCurrency = useConverterStore( state => state.firstCurrency)
     const secondCurrency= useConverterStore( state => state.secondCurrency)
+
     useEffect(()=> {
         convertValue()
     }, [firstCurrency.value,firstCurrency.rate,firstCurrency.isActive, secondCurrency.isActive,secondCurrency.rate,secondCurrency.value])
@@ -27,7 +28,7 @@ export const Converter = (props: ConverterProps) => {
                     <ConverterInput  position="left"/>
                     </div>
                     {dropdownValue && inputSide === "left" ?
-                        <CurrenciesList  position={'left'} currencies={props.currencies}/>
+                        <CurrenciesList  position={'left'} />
                         : null}
 
                 </div>
@@ -37,7 +38,7 @@ export const Converter = (props: ConverterProps) => {
                     <ConverterInput  position={"right"}/>
                     </div>
                     {dropdownValue && inputSide === "right" ?
-                        <CurrenciesList position={'right'} currencies={props.currencies}/>
+                        <CurrenciesList position={'right'} />
                         : null}
 
                 </div>

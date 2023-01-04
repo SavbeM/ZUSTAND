@@ -1,3 +1,5 @@
+import {Dispatch} from "react";
+
 export type CurrenciesKeys = {
     r030: number,
     txt: string,
@@ -28,14 +30,14 @@ export type ConverterStoreType = {
     },
     secondCurrency: {
         name: string | null,
-        value:  string | number | readonly string[] | undefined,
+        value: string | number | readonly string[] | undefined,
         rate: number | null
         isActive: boolean,
     },
     setIsShown(): void,
     setInputSide(position: string): void,
     setCurrencyName(pos: string, curr: string, rate: number): void,
-    setValue(value: string , pos: string): void,
+    setValue(value: string, pos: string): void,
     convertValue(): void,
     setIsActive(pos: string): void
 }
@@ -45,7 +47,6 @@ export type ConverterProps = {
 }
 
 export type CurrenciesListProps = {
-    currencies: Currencies
     position: string
 }
 export type ConverterDropdownProps = {
@@ -57,4 +58,12 @@ export type AllCurrenciesPropsType = {
 export type ConverterInputType = {
     position: string,
 }
+
+export type CurrenciesListType = {
+    name: string,
+    flag: string,
+    rate: number
+}
+
+export type CurrenciesListArrayType = CurrenciesListType[] | null
 

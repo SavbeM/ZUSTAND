@@ -20,7 +20,7 @@ export const getAllCurrenciesRequest = async (setCurr: (data: Currencies) => voi
 
 export const getAllCountriesRequest = async (setCnt: (data: any) => void, setErr: (error: any) => void) => {
     try {
-        const response = axios.get(`https://restcountries.com/v2/all`).then(response => response.data)
+        const response = await axios.get(`https://restcountries.com/v2/all`).then(response => response.data)
         setCnt(response)
     }
     catch(e){

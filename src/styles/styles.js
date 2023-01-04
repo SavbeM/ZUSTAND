@@ -12,3 +12,4 @@ export const dropdownSvgS = <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://ww
 export const tableContainerS = "flex flex-col justify-center h-full w-full bg-gray-800 p-2"
 export const tableS = "table-auto rounded-md text-gray-500 dark:text-gray-400"
 export const tHeadS = "text-gray-700 uppercase bg-gray-800"
+export const currenciesListDivS = "flex flex-col py-1 max-h-24 overflow-y-auto justify-center align-middle"
