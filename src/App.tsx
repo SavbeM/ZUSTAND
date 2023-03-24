@@ -5,45 +5,37 @@ import {Converter} from "./components/Converter";
 import {Spinner} from "./components/Spinner";
 import {AllCurrenciesTable} from "./components/AllCurrenciesTable";
 import {getAllCountriesRequest, getAllCurrenciesRequest} from "./api/requests";
-
-
+import {Search} from "./components/Search";
 
 
 function App() {
-
-    const getAllCurrencies = mainStore(state => state.getAllCurrencies)
-    const getAllCountries = mainStore(state => state.getAllCountries )
-    const setGlobalError = mainStore(state => state.setGlobalError)
-    const globalError = mainStore(state => state.globalError)
-    const currencies = mainStore((state) => state.currencies)
-    const countries = mainStore(state => state.countries)
+    const {getAllCurrencies, getAllCountries, setGlobalError, globalError, currencies, countries} = mainStore(state => state)
 
     useEffect(() => {
         getAllCurrenciesRequest(getAllCurrencies, setGlobalError)
         getAllCountriesRequest(getAllCountries, setGlobalError)
     }, [])
 
-return (!globalError) ?  (
+    if (currencies.length < 1 || countries.length < 1) {
+        return <Spinner/>
+    }
+
+    if (globalError) {
+        return <div className="w-full h-full bg-dark text-center">
+            <h1 className="text-3xl text-red-600 p-6 font-bold ">Error {globalError.message}!!!</h1>
+        </div>
+    }
+
+    return (
         <div className="w-full h-full bg-dark text-center">
             <h1 className="text-3xl text-white p-6 font-bold ">Currency Converter</h1>
-            {currencies && countries ?
-                <div>
-
-                    <Converter currencies={currencies}/>
-                    <AllCurrenciesTable currencies={currencies}/>
-                </div>
-                :
-                <Spinner/>
-            }
+            <div>
+                <Converter/>
+                <Search/>
+                <AllCurrenciesTable/>
+            </div>
         </div>
     )
-    :
-    <div className="w-full h-full bg-dark text-center">
-        <h1 className="text-3xl text-red-600 p-6 font-bold ">Error {globalError.message}!!!</h1>
-    </div>
-
-
-
 }
 
 export default App;
