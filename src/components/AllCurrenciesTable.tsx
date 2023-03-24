@@ -1,17 +1,20 @@
 import React, {useState} from "react";
-import {AllCurrenciesPropsType, Currencies} from "../types/types";
+import {CurrencyItem} from "../types/types";
 import {buttonS, tableContainerS, tableS, tHeadS} from "../styles/styles";
+import {mainStore} from "../state/mainState";
 
 
-export const AllCurrenciesTable = (props: AllCurrenciesPropsType) => {
+export const AllCurrenciesTable = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const [portion, setPortion] = useState(10)
+    const currencies = mainStore(state => state.currencies)
+
     const portionHandler = () => {
-        if(portion + 10 < props.currencies.length) {
+        if(portion + 10 < currencies.length) {
             setPortion(portion + 10)
         }
         else {
-            const value = props.currencies.length - portion
+            const value = currencies.length - portion
             setPortion(portion + value - 1)
             setButtonDisabled(true)
         }
@@ -19,14 +22,15 @@ export const AllCurrenciesTable = (props: AllCurrenciesPropsType) => {
 
         const renderCurrencyPortion = () => {
             let acc = 0
-            const toRenderArray: Currencies = []
+            const toRenderArray: CurrencyItem[] = []
             while (acc < portion) {
                 acc++
-                toRenderArray.push(props.currencies[acc])
+                toRenderArray.push(currencies[acc])
             }
-            if (toRenderArray.length > 1) {
+            if (toRenderArray.length > 1 && currencies) {
                 return (toRenderArray.map((i) => {
-                    return (<tr className="border-dashed border-b-2 border-b-light-blue" key={Math.random()}>
+                    return (
+                        <tr className="border-dashed border-b-2 border-b-light-blue" key={i.cc}>
                             <td className="text-white">{i.txt}</td>
                             <td className="text-white">{i.rate}</td>
                         </tr>
