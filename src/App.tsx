@@ -4,19 +4,18 @@ import {mainStore} from "./state/mainState";
 import {Converter} from "./components/Converter";
 import {Spinner} from "./components/Spinner";
 import {AllCurrenciesTable} from "./components/AllCurrenciesTable";
-import {getAllCountriesRequest, getAllCurrenciesRequest} from "./api/requests";
 import {Search} from "./components/Search";
+import {getAllCurrenciesRequest} from "./api/requests";
 
 
 function App() {
-    const {getAllCurrencies, getAllCountries, setGlobalError, globalError, currencies, countries} = mainStore(state => state)
+    const {setAllCurrencies,setGlobalError,globalError, currencies} = mainStore(state => state)
 
     useEffect(() => {
-        getAllCurrenciesRequest(getAllCurrencies, setGlobalError)
-        getAllCountriesRequest(getAllCountries, setGlobalError)
+        getAllCurrenciesRequest(setAllCurrencies, setGlobalError)
     }, [])
 
-    if (currencies.length < 1 || countries.length < 1) {
+    if (currencies.length < 1) {
         return <Spinner/>
     }
 

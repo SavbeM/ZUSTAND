@@ -1,52 +1,73 @@
-import React, {useState} from "react";
-import {CurrencyItem} from "../types/types";
+import React, {FC, useEffect, useState, useCallback} from "react";
+import {
+    BY_ALPHABET, BY_CURRENCY_RATE,
+    CurrencyItem,
+} from "../types/types";
 import {buttonS, tableContainerS, tableS, tHeadS} from "../styles/styles";
 import {mainStore} from "../state/mainState";
+import CurrencyFlag from "react-currency-flags";
+import {FiltrationButtonItem} from "./RenderFiltrationButton";
+import {useAllCurrenciesTableFiltration} from "./AllCurrenciesTableFiltration";
 
 
-export const AllCurrenciesTable = () => {
-    const [buttonDisabled, setButtonDisabled] = useState(false)
-    const [portion, setPortion] = useState(10)
-    const currencies = mainStore(state => state.currencies)
+export const AllCurrenciesTable: FC = () => {
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [portion, setPortion] = useState(10);
+    const searchResult = mainStore(state => state.searchResult)
+    const currencies = mainStore(state => !state.searchInputIsEmpty ? state.searchResult : state.currencies);
+    useAllCurrenciesTableFiltration()
 
-    const portionHandler = () => {
-        if(portion + 10 < currencies.length) {
-            setPortion(portion + 10)
+    useEffect(() => {
+    }, [currencies, searchResult]);
+
+
+    const portionHandler = useCallback(() => {
+        const availableElements = currencies.length - portion;
+        if (availableElements > 10) {
+            setPortion(p => p + 10);
+            setButtonDisabled(false);
+        } else if (availableElements > 0) {
+            setPortion(p => p + availableElements);
+            setButtonDisabled(true);
+        } else {
+            setButtonDisabled(true);
         }
-        else {
-            const value = currencies.length - portion
-            setPortion(portion + value - 1)
-            setButtonDisabled(true)
-        }
-    }
+    }, [currencies.length, portion]);
 
-        const renderCurrencyPortion = () => {
-            let acc = 0
-            const toRenderArray: CurrencyItem[] = []
-            while (acc < portion) {
-                acc++
-                toRenderArray.push(currencies[acc])
-            }
-            if (toRenderArray.length > 1 && currencies) {
-                return (toRenderArray.map((i) => {
+    const renderCurrencyPortion = useCallback(() => {
+        const toRenderArray: CurrencyItem[] = currencies.slice(0, portion)
+
+        if (toRenderArray.length >= 1) {
+            return (toRenderArray.map((i) => {
+                if (i) {
                     return (
                         <tr className="border-dashed border-b-2 border-b-light-blue" key={i.cc}>
-                            <td className="text-white">{i.txt}</td>
-                            <td className="text-white">{i.rate}</td>
+                            <td className="text-white pt-2">{i.txt}</td>
+                            <td className="text-white pt-2"><CurrencyFlag currency={i.cc} size='xl'/></td>
+                            <td className="text-white pt-2">{i.rate}</td>
                         </tr>
                     )
-                }))
-            }
+                }
+            }))
         }
+    }, [currencies, portion]);
 
-    return (
+    return currencies.length >= 1 ? (
+
             <div className={tableContainerS}>
                 <table
                     className={tableS}>
                     <thead className={tHeadS}>
                     <tr>
-                        <th className="text-white m-6">Валюта</th>
-                        <th className="text-white m-6">Официальный курс</th>
+                        <th className="flex flex-row w-36 m-auto">
+                            <span className="m-6 w-24 text-white">Валюта</span>
+                            <FiltrationButtonItem type={BY_ALPHABET}/>
+                        </th>
+                        <th className="text-white w-24 m-6">Прапор</th>
+                        <th className="flex flex-row w-56 m-auto">
+                            <span className="m-6 w- text-white">Офиціційний курс</span>
+                            <FiltrationButtonItem type={BY_CURRENCY_RATE} />
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -59,6 +80,7 @@ export const AllCurrenciesTable = () => {
                         className={buttonS}>More...
                 </button>
             </div>
-        )
-    }
-
+        ) :
+        <div className="flex justify-center pt-2.5 items-center h-full text-white">По вашему запросу не найдено ни одной
+            валюты.</div>
+}

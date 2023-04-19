@@ -1,6 +1,4 @@
-import {Dispatch} from "react";
-
-export type CurrenciesKeys = {
+export type CurrencyItem = {
     r030: number,
     txt: string,
     rate: number,
@@ -8,14 +6,31 @@ export type CurrenciesKeys = {
     exchangedate: string
 }
 
-export type Currencies = CurrenciesKeys[]
+interface FiltrationType {
+    type: string;
+    isActive: boolean
+    ascending: boolean;
+}
+
+export const BY_ALPHABET = "byAlphabet"
+export const BY_CURRENCY_RATE = "byCurrencyRate"
+export type FiltrationMethodType = typeof BY_ALPHABET | typeof BY_CURRENCY_RATE
+
+export interface FiltrationStoreType {
+    byAlphabet: FiltrationType,
+    byCurrencyRate: FiltrationType,
+    changeFiltrationMethod(type: string): void
+}
+
 
 export type MainStoreType = {
-    currencies: Currencies | null,
-    countries: any | null,
+    currencies: CurrencyItem[]
+    searchResult: CurrencyItem[]
     globalError: any | null
-    getAllCurrencies(data: Currencies): void,
-    getAllCountries(data: any): void
+    searchInputIsEmpty: boolean
+    setSearchInputIsEmpty(isEmpty: boolean): void
+    setSearchResult(result: CurrencyItem[]): void
+    setAllCurrencies(data: CurrencyItem[]): void
     setGlobalError(error: any): void
 }
 
@@ -34,36 +49,13 @@ export type ConverterStoreType = {
         rate: number | null
         isActive: boolean,
     },
+    swapCurrencies(): void
     setIsShown(): void,
     setInputSide(position: string): void,
     setCurrencyName(pos: string, curr: string, rate: number): void,
     setValue(value: string, pos: string): void,
-    convertValue(): void,
+    convertValue: () => void,
     setIsActive(pos: string): void
 }
 
-export type ConverterProps = {
-    currencies: Currencies
-}
-
-export type CurrenciesListProps = {
-    position: string
-}
-export type ConverterDropdownProps = {
-    position: string,
-}
-export type AllCurrenciesPropsType = {
-    currencies: Currencies
-}
-export type ConverterInputType = {
-    position: string,
-}
-
-export type CurrenciesListType = {
-    name: string,
-    flag: string,
-    rate: number
-}
-
-export type CurrenciesListArrayType = CurrenciesListType[] | null
 

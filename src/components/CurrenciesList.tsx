@@ -1,52 +1,48 @@
-import {CurrenciesKeys, CurrenciesListArrayType, CurrenciesListProps} from "../types/types";
+import {CurrencyItem} from "../types/types";
 import {useConverterStore} from "../state/converterState";
-import {currenciesListContainerS, currenciesListDivS, currenciesListItemS} from "../styles/styles";
-import React, {useEffect, useState} from "react";
+import {currenciesListContainerS, currenciesListItemS} from "../styles/styles";
+import CurrencyFlag from 'react-currency-flags';
+import React, {useEffect, useState, FC} from "react";
 import {mainStore} from "../state/mainState";
+import {Spinner} from "./Spinner";
 
 
-export const CurrenciesList = (props: CurrenciesListProps) => {
-    const setCurrencyName: (pos: string, curr: string, rate: number) => void = useConverterStore(state => state.setCurrencyName)
-    const setIsShown = useConverterStore(state => state.setIsShown)
-    const countries = mainStore(state => state.countries)
-    const currencies = mainStore(state => state.currencies)
-    const [currenciesList, setCurrenciesList] => useState<CurrenciesListArrayType | null>()
+export type CurrenciesListProps = {
+    position: string
+}
 
-    const createCurrencyList = () => {
-        currencies.sort((a: CurrenciesKeys, b:CurrenciesKeys): number => {
-            let currA = a.cc.toLowerCase(), currB = b.cc.toLowerCase();
-            if (currA < currB) {
-                return -1
-            } else if (currA > currB){
-                return 1
-            }
-            else return 0
-        }).map((currItem: CurrenciesKeys) => {
-            setCurrenciesList([...currenciesList, {rate: currItem.rate,name: currItem.cc, flag: countries.map((country: any) =>{
-                    if (country.currencies?.[0].code == currItem.cc) {
-                        return country.flag
-                    }
-            })}])
-        })
-    }
-    useEffect(()=>{
-        createCurrencyList()
-    }, [])
+export const CurrenciesList: FC<CurrenciesListProps> = (props) => {
+    const {setCurrencyName, setIsShown} = useConverterStore(state => state)
+    const {searchResult, currencies} = mainStore(state => state)
 
-    return (
+    const [currenciesList, setCurrenciesList] = useState<CurrencyItem[]>([])
+
+
+    useEffect(() => {
+        setCurrenciesList(searchResult.length >= 1 ? searchResult : currencies)
+    }, [searchResult])
+
+
+    return (currenciesList) ?
+
+        <div onBlur={() => setIsShown()}
+             className={currenciesListContainerS}
+             role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+            {currenciesList.map((currItem) => {
+                return (<div key={currItem.cc}
+                             onClick={() => setCurrencyName(props.position, currItem.cc, currItem.rate)}
+                             className={currenciesListItemS}>
+                    <div>{currItem.cc}</div>
+                    <CurrencyFlag currency={currItem.cc} size="lg"/>
+                </div>)
+            })}
+        </div>
+        :
         <div onBlur={(e) => setIsShown()}
              className={currenciesListContainerS}
              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
-            <div className={currenciesListDivS} role="none">
-                {currenciesList.map((currItem) =>
-                    <div
-                        onClick={() => setCurrencyName(props.position, currItem.name, currItem.rate)}
-                        key={currItem.name} className={currenciesListItemS}>
-                        <div key={Math.random()}>{currItem.name}</div>
-                        <div key={Math.random()}>{currItem.flag}</div>
-                    </div>)}
-            </div>
+            <Spinner/>
         </div>
 
-    )
+
 }
