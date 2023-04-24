@@ -19,7 +19,7 @@ export const useConverterStore = create<ConverterStoreType>()((set) => ({
         },
 
         swapCurrencies(){
-          set(state => ({...state, firstCurrency: {...state.secondCurrency}, secondCurrency: {...state.firstCurrency}}))
+          set(state => ({...state, firstCurrency: {...state.firstCurrency, value: state.secondCurrency.value}, secondCurrency: {...state.secondCurrency, value: state.firstCurrency.value}}))
         },
         setIsShown() {
             set(state => ({...state, isShown: !state.isShown}))

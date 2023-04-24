@@ -16,11 +16,11 @@ export const ConverterDropdown: FC<ConverterDropdownProps> = (props: ConverterDr
     const switchCurrencyRender = () => {
         switch (props.position) {
             case "left":
-                return firstCurrencyName ?? "Выберите валюту"
+                return firstCurrencyName ?? "Оберіть валюту"
             case "right":
-                return secondCurrencyName ?? "Выьерите валюту"
+                return secondCurrencyName ?? "Оберіть валюту"
             default:
-                return "Выберите валюту"
+                return "Оберіть валюту"
 
         }
     }

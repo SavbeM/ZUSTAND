@@ -42,9 +42,9 @@ export const AllCurrenciesTable: FC = () => {
                 if (i) {
                     return (
                         <tr className="border-dashed border-b-2 border-b-light-blue" key={i.cc}>
-                            <td className="text-white pt-2">{i.txt}</td>
-                            <td className="text-white pt-2"><CurrencyFlag currency={i.cc} size='xl'/></td>
-                            <td className="text-white pt-2">{i.rate}</td>
+                            <td className="text-white w-24 pt-2">{i.txt}</td>
+                            <td className="text-white w-24 pt-2"><CurrencyFlag currency={i.cc} size='xl'/></td>
+                            <td className="text-white w-24 pt-2">{i.rate}</td>
                         </tr>
                     )
                 }
@@ -59,13 +59,13 @@ export const AllCurrenciesTable: FC = () => {
                     className={tableS}>
                     <thead className={tHeadS}>
                     <tr>
-                        <th className="flex flex-row w-36 m-auto">
+                        <th className="flex flex-row w-56 m-auto">
                             <span className="m-6 w-24 text-white">Валюта</span>
                             <FiltrationButtonItem type={BY_ALPHABET}/>
                         </th>
-                        <th className="text-white w-24 m-6">Прапор</th>
+                        <th className="m-6 text-center text-white">Прапор</th>
                         <th className="flex flex-row w-56 m-auto">
-                            <span className="m-6 w- text-white">Офиціційний курс</span>
+                            <span className="m-6 w-24 text-white">Офіційний курс</span>
                             <FiltrationButtonItem type={BY_CURRENCY_RATE} />
                         </th>
                     </tr>

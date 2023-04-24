@@ -11,7 +11,7 @@ export const dropdownSvgS = <svg className="-mr-1 ml-2 h-5 w-5" xmlns="http://ww
           d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
           clipRule="evenodd"/>
 </svg>
-export const tableContainerS = "flex flex-col justify-center h-full w-full bg-gray-800 p-2"
+export const tableContainerS = "flex flex-col justify-center h-full bg-gray-800 p-2"
 export const tableS = "table-auto rounded-md text-gray-500 dark:text-gray-400"
 export const tHeadS = "text-gray-700 uppercase bg-gray-800"
 export const searchS = "self-center w-56 p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
